@@ -56,8 +56,8 @@ function App() {
         {/* private route */}
         <Route path='/login' element={<LoginPage setValid={setValid} setIsLogin={setIsLogin} userId = {userId} setUserId={setUserId} setToken={setToken}/>}>
         </Route>
-        <Route path='/signup' element={<SignUpPage />}></Route>
         <Route path='*' element={<PageNotFound />}></Route>
+        <Route path='/signup' element={<SignUpPage />}></Route>
         <Route path='/addTask' element={ <AddTaskPage token={token} userId={userId}/>}></Route>
         {/* 個人資訊頁面 */}
         {/* 統計資料頁面 */}
