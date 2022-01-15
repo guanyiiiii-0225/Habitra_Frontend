@@ -1,7 +1,7 @@
 import { Form, Input, Button, message} from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import React, {useState, useEffect} from 'react';
-// import { Link,useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { login } from '../axios';
 
 const LoginPage = ({setValid, setIsLogin, setToken, userId, setUserId}) => {
@@ -61,7 +61,7 @@ const LoginPage = ({setValid, setIsLogin, setToken, userId, setUserId}) => {
                         <Button type="primary" htmlType="submit" className="wide-form-button" onClick={handleLogin}>
                             Login
                         </Button>
-                        Don't have an Account?  <a href="/signUp">Sign Up</a>
+                        Don't have an Account?  <Link to="/signup">Sign Up</Link>
                     </Form.Item>
                 </Form>
             </div>
