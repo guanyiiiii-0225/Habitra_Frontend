@@ -52,11 +52,11 @@ function App() {
     <BrowserRouter>
       <Routes>
         {/* public route */}
-        <Route path='/' element={isLogin ? <MainPage setToken={setToken} setValid={setValid} userId={userId} token={token}/> : <LoginPage setValid={setValid} setIsLogin={setIsLogin} setToken={setToken} userId = {userId} setUserId={setUserId} />}></Route>
+        <Route exact path='/' element={isLogin ? <MainPage setToken={setToken} setValid={setValid} userId={userId} token={token}/> : <LoginPage setValid={setValid} setIsLogin={setIsLogin} setToken={setToken} userId = {userId} setUserId={setUserId} />}></Route>
         {/* private route */}
         <Route path='/login' element={<LoginPage setValid={setValid} setIsLogin={setIsLogin} userId = {userId} setUserId={setUserId} setToken={setToken}/>}>
         </Route>
-        <Route path='/signUp' element={<SignUpPage />}></Route>
+        <Route path='/signup' element={<SignUpPage />}></Route>
         <Route path='*' element={<PageNotFound />}></Route>
         <Route path='/addTask' element={ <AddTaskPage token={token} userId={userId}/>}></Route>
         {/* 個人資訊頁面 */}
