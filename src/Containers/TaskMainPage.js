@@ -16,7 +16,7 @@ import {
     CheckSquareOutlined
   } from '@ant-design/icons';
 
-import TaskView from './TaskView';
+import TaskView from './taskView';
 import TaskInfo from './TaskInfo';
 import TaskMenber from './TaskMember';
 import TaskStats from './TaskStats';
