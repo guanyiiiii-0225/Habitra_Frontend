@@ -23,11 +23,15 @@ import TaskStats from './TaskStats';
 import UserInfo from './UserInfo';
 import { getUserInfo, addRecord, getTaskDetail, getTask, getParticipationDetail } from '../axios';
 import { Icon } from '@iconify/react';
+// import { navigate } from '@reach/router';
+import { useNavigate } from "react-router-dom";
+
 
 
 const TaskMainPage = ({setToken, setValid, userId, token}) => {
 
     // default settings
+    let navigate = useNavigate();
     const { TextArea } = Input;
     const {Title, Text} = Typography;
     const { Content, Header } = Layout; 
@@ -90,6 +94,10 @@ const TaskMainPage = ({setToken, setValid, userId, token}) => {
         const res = await addRecord({user_id: userId, task_id: taskId, daily_desc: typedDesc, token: token});
         console.log("res = ", res);
         message.success('成功打卡！');
+        setTypedDesc("");
+        setPage(4);
+        setPage(1);
+        
     };
 
     const handleCancel = () => {
@@ -179,8 +187,8 @@ const TaskMainPage = ({setToken, setValid, userId, token}) => {
         </Tooltip>
         }   
         <Modal title="我要打卡" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
-            <Text >寫下任何的想法都可以喔！</Text>
-            <TextArea showCount maxLength={100} onChange={textOnChange} />
+            {/* <Text >寫下任何的想法都可以喔！</Text> */}
+            <TextArea showCount maxLength={100} onChange={textOnChange} defaultValue={typedDesc} />
         </Modal>
 
     </Layout>

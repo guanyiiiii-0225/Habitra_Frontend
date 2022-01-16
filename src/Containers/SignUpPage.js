@@ -88,14 +88,10 @@ const SignUpPage = () => {
             if(response === 'success') {
                 message.success('註冊成功');
                 navigate("/login");
-                // setLogin(true);
-                // setName(userName);
-                // setUserId(res.data);
             }
             else{
                 message.error('失敗QQ...');
             }
-            // history.push("/login");
             // 過幾秒直接到Sign in Page
         }
       }

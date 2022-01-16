@@ -98,7 +98,7 @@ const TaskMenber = ({taskId, userId, token, userName}) => {
         message.success("成功刪除");
         setState({selectedRowKeys: [], });
     }
-
+    
     const onSearch = async (value) => {
         setIsSearching(true);
         const res = await getUserExist({user_id: value, task_id: taskId});
@@ -178,7 +178,7 @@ const TaskMenber = ({taskId, userId, token, userName}) => {
                 />
             <Modal title="新增成員" visible={showAddMemberModal} onCancel={() => {setShowAddMemberModal(false);setAddMemberList([]);}} onOk={() => {handleSendAddMember();}} >
             {/* <Text >寫下任何的想法都可以喔！</Text> */}
-            <Search placeholder="input search text"  style={{ width: 200 }} onSearch={onSearch} loading={isSearching}  enterButton />
+            <Search  placeholder="請輸入用戶ID" style={{ width: 200 }} onSearch={onSearch} loading={isSearching}  enterButton />
             <Divider ></Divider>
             <List
                 bordered
