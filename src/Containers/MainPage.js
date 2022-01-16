@@ -99,15 +99,18 @@ const MainPage = ({setToken, setValid, userId, token}) => {
         border-radius: 1000px;
 
         text-align: center;
-        line-height: 50px;
+        line-height: 50px; 
     `
+    const [collapsed, setCollapsed] = useState(false);
+    const [contentWidth, setContentWidth] = useState("20vw");
+
 
     return(
     <Layout style={{ minHeight: '100vh' }}>
-        <SideBar place = "mainPage" userId = {userId} userName={userName} userAvatar={userAvatar} setValid={setValid}  setPage={setPage} setToken={setToken}/>
-        <Layout className="site-layout" style={{ marginLeft: 200 }}>
+        <SideBar setContentWidth={setContentWidth} collapsed={collapsed} setCollapsed={setCollapsed} place = "mainPage" userId = {userId} userName={userName} userAvatar={userAvatar} setValid={setValid}  setPage={setPage} setToken={setToken}/>
+        <Layout className="site-layout" style={{ marginLeft: contentWidth, marginTop: "2vh" }}>
             {/* 以下麵包屑 FE待修正 */}
-          <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
+          <Content >
             {/* 以下是主要文件 */}
             {
                 page === 1
@@ -118,7 +121,7 @@ const MainPage = ({setToken, setValid, userId, token}) => {
                 : <UserInfo userId={userId} name={userName} email={userEmail} token={token}/>
             }
           </Content> 
-        </Layout>
+        </Layout >
         {/* 加一個可以新增任務的固定按鈕，hover可以看到詳細資訊 */}
         
             <Tooltip title="新增任務">

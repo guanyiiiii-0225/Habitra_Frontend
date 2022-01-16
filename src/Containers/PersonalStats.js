@@ -10,10 +10,24 @@ import moment from 'moment';
 const PersonalStats = ({userId, token}) => {
 
     // default settings
+    const formatDate = (date)=>{
+      var str1 = date.getMonth() + 1;
+      var str2 = date.getDate();
+      if(parseInt(date.getMonth() + 1) < 10){
+          str1 = '0'+ (date.getMonth() + 1);
+      }
+      if(parseInt(date.getDate()) < 10){
+          str2 = '0'+date.getDate();
+      }
+      let formatted_date = date.getFullYear() + "-" + str1 + "-" +str2;
+      return formatted_date;
+    }
 
+    var today = new Date();
     // to 陳沛妤: variables
-    const [startDate, setStartDate] = useState("");
-    const [endDate, setEndDate] = useState("");
+    const [startDate, setStartDate] = useState(formatDate(today));
+    const [endDate, setEndDate] = useState(formatDate(new Date(today.setDate(today.getDate() - today.getDay()+6))));
+    
     // task list
     const [task, setTask] = useState([]);
     // total statistic list 在接的時候加總
@@ -53,19 +67,6 @@ const PersonalStats = ({userId, token}) => {
     }, [startDate]);
   
     // function
-    const formatDate = (date)=>{
-      var str1 = date.getMonth() + 1;
-      var str2 = date.getDate();
-      if(parseInt(date.getMonth() + 1) < 10){
-          str1 = '0'+ (date.getMonth() + 1);
-      }
-      if(parseInt(date.getDate()) < 10){
-          str2 = '0'+date.getDate();
-      }
-      let formatted_date = date.getFullYear() + "-" + str1 + "-" +str2;
-      return formatted_date;
-    }
-
     const weekOnChange = (date) => {
         // get start and end of the week
         let firstday = new Date(date.setDate(date.getDate() - date.getDay()));

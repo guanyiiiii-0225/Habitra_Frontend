@@ -65,7 +65,7 @@ const UserInfo = ({userId, name, email, token}) => {
       }, []);
 
     return(
-        <div className="site-layout-background" style={{ marginTop: 48, minHeight: 360 }}>
+        <div className="site-layout-background" style={{ minHeight: 360 }}>
         <Divider orientation="left">個人資料</Divider>
         {/* 我先擺上去 之後排版...... */}
         <Descriptions

@@ -2,3 +2,28 @@
   text-align: center;
 }
 
+
+.default_background{
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  background-color: #F0F2F5;
+  overflow:hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.addtask_background{
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  background-color: #F0F2F5;
+  overflow:hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

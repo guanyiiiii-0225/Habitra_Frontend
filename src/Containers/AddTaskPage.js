@@ -1,4 +1,4 @@
-import { Modal, Avatar, message, Switch, Typography, Divider, Form, Input, TimePicker, Select, Checkbox, Row, Col, Button  } from 'antd';
+import { Modal, Avatar, message, Switch, Typography, Divider, Form, Input, TimePicker, Select, Checkbox, Row, Col, Button, Space   } from 'antd';
 import moment from 'moment';
 import { useState, useEffect } from 'react';
 import { addTask, addNewAdmin, addNewMember, getAllIcon } from '../axios';
@@ -9,6 +9,7 @@ const AddTaskPage = ({token, userId}) => {
 
     //default settings
     const navigate = useNavigate();
+    // const { Option } = Select;
 //     POST /task   新增任務
         var iconList = []; 
         useEffect( async () => {
@@ -125,6 +126,7 @@ const AddTaskPage = ({token, userId}) => {
         
 
     return(
+        <div className='addtask_background'>
         <div style={ {marginLeft: '30px', marginTop: '30px', marginRight: '100px'}}>
             <Title level={3}>新增任務</Title>
             {/* <Divider orientation="left">任務規範</Divider> */}
@@ -132,17 +134,11 @@ const AddTaskPage = ({token, userId}) => {
                     name="normal_login"
                     className="login-form"
                     initialValues={{remember: true, layout: 'vertical'}}
-
+                    style={{display: "flex", flexDirection: "column"}}
             >
                 <Form.Item
                         name="avatar"
                         label="任務圖標"
-                        rules={[
-                        {
-                            required: true,
-                            message: '請選擇任務圖標!',
-                        },
-                        ]}
                     >
                      <Avatar shape="square" size={100} src={taskIcon} onClick={() => setTaskListOpen(true)}  />
                 </Form.Item>
@@ -169,14 +165,8 @@ const AddTaskPage = ({token, userId}) => {
                 <Form.Item
                     name="finishRange"
                     label="打卡區間"
-                    rules={[
-                    {
-                        required: true,
-                        message: '請輸入打卡時間區間!',
-                    },
-                    ]}
                 >
-                    <TimePicker.RangePicker defaultValue={[start_hour, end_hour]} format={"HH:mm"} value={[start_hour, end_hour]} onChange={(time) => handleTimePick(time)} />
+                    <TimePicker.RangePicker  allowClear={false} defaultValue={[start_hour, end_hour]} format={"HH:mm"} value={[start_hour, end_hour]} onChange={(time) => handleTimePick(time)} />
                 </Form.Item>
                 {/* 完成方式 */}
                 <Form.Item
@@ -192,50 +182,36 @@ const AddTaskPage = ({token, userId}) => {
                 </Form.Item>
                 {/* 休息日: 給星期（一個禮拜休息星期幾）, list */}
                 <Form.Item
-                    name="relaxDate"
-                    label="休息日"
-                >
-                    <Checkbox.Group style={{ width: '100%' }} onChange={(e) => setWorking_day(e)} >
-                        <Row>
-                        <Col span={8}>
-                            <Checkbox value="1">Monday</Checkbox>
-                        </Col>
-                        <Col span={8}>
-                            <Checkbox value="2">Tuesday</Checkbox>
-                        </Col>
-                        <Col span={8}>
-                            <Checkbox value="3">Wednesday</Checkbox>
-                        </Col>
-                        <Col span={8}>
-                            <Checkbox value="4">Thursday</Checkbox>
-                        </Col>
-                        <Col span={8}>
-                            <Checkbox value="5">Friday</Checkbox>
-                        </Col>
-                        <Col span={8}>
-                            <Checkbox value="6">Saturday</Checkbox>
-                        </Col>
-                        <Col span={8}>
-                            <Checkbox value="7">Sunday</Checkbox>
-                        </Col>
-                        </Row>
-                    </Checkbox.Group>
-                </Form.Item>
+                        name="relaxDate"
+                        label="休息日"
+                    >
+                        <Select style={{ width: 500 }} mode='multiple' style={{ width: 120 }} onChange={(value) => setWorking_day(value)} >
+                            <Option value="1">Mon</Option>
+                            <Option value="2">Tue</Option>
+                            <Option value="3">Wed</Option>
+                            <Option value="4">Thur</Option>
+                            <Option value="5">Fri</Option>
+                            <Option value="6">Sat</Option>
+                            <Option value="7">Sun</Option>
+                        </Select>
+                    </Form.Item>
                 {/* 懲罰機制 */}
+                <Space style={{ display: 'flex', flexDirection: "row", alignItems: "flex-start" }} align="baseline">
                 <Form.Item
                     name="punish"
                     label="未完成罰金"
+                    style={{display: "flex", flexDirection: "row"}}
                 >
                     <Switch checkedChildren="開啟" unCheckedChildren="關閉" defaultChecked={false} onChange={handlePunush}/>
+                </Form.Item>
                     <Input.Group compact>
-                        {/* switch */}
-                        {/* input box */}
                         <div style={{visibility:punish !== 0 ? 'visible' : 'hidden'}}>
                             <Input style={{ width: 100 }} value = {punish} placeholder="請輸入數字" onChange={(e) => setPunish(e.target.value)} />
-                            <p>元</p>
+                            {/* <p>元</p> */}
                         </div>
+                        <p style={{visibility:punish !== 0 ? 'visible' : 'hidden'}}>&ensp; NTD</p>
                     </Input.Group>
-                </Form.Item>
+                </Space>
                 {/* 需上傳文字 + info */}
                 <Form.Item
                     name="textRequirement"
@@ -251,6 +227,7 @@ const AddTaskPage = ({token, userId}) => {
                             送出
                         </Button>
                     </Form.Item>
+
             </Form> 
             <Modal title="請選取你想要的圖標" visible={taskListOpen} onCancel={() =>{setTaskListOpen(false);}} footer={[]}
             >
@@ -259,6 +236,7 @@ const AddTaskPage = ({token, userId}) => {
                 {/* </Collapse> */}
             </Modal>
 
+        </div>
         </div>
     )
 

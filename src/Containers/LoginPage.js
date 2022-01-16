@@ -3,6 +3,7 @@ import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import { login } from '../axios';
+import styled from 'styled-components';
 
 const LoginPage = ({setValid, setIsLogin, setToken, userId, setUserId}) => {
     // let history = useHistory();
@@ -20,10 +21,11 @@ const LoginPage = ({setValid, setIsLogin, setToken, userId, setUserId}) => {
         }
 
     }
+
     
     return (
-        <>
-            <h1 className="login_title">Login</h1>
+        <div className="default_background">
+            <h1 className="login_title">HABITRA</h1>
             <div className="login_page">
                 <Form
                     name="normal_login"
@@ -39,7 +41,7 @@ const LoginPage = ({setValid, setIsLogin, setToken, userId, setUserId}) => {
                         },
                         ]}
                     >
-                        <Input prefix={<UserOutlined className="site-form-item-icon" />} value = {userId} placeholder="UserId" onChange={(e) => setUserId(e.target.value)}/>
+                        <Input style={{ width: "30vw" }} size="large"  prefix={<UserOutlined className="site-form-item-icon" />} value = {userId} placeholder="UserId" onChange={(e) => setUserId(e.target.value)}/>
                     </Form.Item>
 
                     <Form.Item
@@ -52,7 +54,10 @@ const LoginPage = ({setValid, setIsLogin, setToken, userId, setUserId}) => {
                         ]}
                     >
                         <Input
+                            style={{ width: "30vw" }}
+
                             prefix={<LockOutlined className="site-form-item-icon" />}
+                            size="large" 
                             type="password"
                             placeholder="Password"
                             value = {password}
@@ -61,14 +66,14 @@ const LoginPage = ({setValid, setIsLogin, setToken, userId, setUserId}) => {
                     </Form.Item>
 
                     <Form.Item>
-                        <Button type="primary" htmlType="submit" className="wide-form-button" onClick={handleLogin}>
+                        <Button block type="primary" htmlType="submit" className="wide-form-button" onClick={handleLogin}>
                             Login
                         </Button>
-                        Don't have an Account?  <Link to="/signUp">Sign Up</Link>
                     </Form.Item>
+                    Don't have an Account?  <Link to="/signUp">Sign Up</Link>
                 </Form>
             </div>
-        </>
+        </div>
     );
 }
 

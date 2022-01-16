@@ -18,7 +18,7 @@ const PersonalTasks = ({ongoingTaskInfo,doneTaskInfo,relaxTaskInfo}) => {
 
 
     return(
-        <div className="site-layout-background" style={{ marginTop: 48, minHeight: 360 }}>
+        <div className="site-layout-background" style={{ minHeight: 360 }}>
         <Title level={3}>今日尚未完成</Title>
         <Tasks>
         {ongoingTaskInfo.map(

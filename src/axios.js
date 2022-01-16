@@ -1,5 +1,5 @@
 import axios from 'axios';
-const instance = axios.create({ baseURL: 'https://habitra-backend.herokuapp.com/api' });
+const instance = axios.create({ baseURL: 'http://localhost:5000/api' });
 
 //testToken
 const testToken = async(props) => {

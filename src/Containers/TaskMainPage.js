@@ -16,7 +16,7 @@ import {
     CheckSquareOutlined
   } from '@ant-design/icons';
 
-import TaskView from './taskView';
+import TaskView from './TaskView';
 import TaskInfo from './TaskInfo';
 import TaskMenber from './TaskMember';
 import TaskStats from './TaskStats';
@@ -117,11 +117,15 @@ const TaskMainPage = ({setToken, setValid, userId, token}) => {
       setManager(res_3.Is_Admin);
       setIsQuit(res_3.Is_Quit);
     }, []);
+    
+
+    const [collapsed, setCollapsed] = useState(false);
+    const [contentWidth, setContentWidth] = useState("20vw");
 
     return(
         <Layout style={{ minHeight: '100vh' }}>
-        <SideBar place = "taskMainPage" userId = {userId} userName={userName} userAvatar={userAvatar} setValid={setValid}  setPage={setPage} setToken={setToken}/>
-        <Layout className="site-layout" style={{ marginLeft: 200 }}>
+        <SideBar place = "taskMainPage" setContentWidth={setContentWidth} collapsed={collapsed} setCollapsed={setCollapsed} userId = {userId} userName={userName} userAvatar={userAvatar} setValid={setValid}  setPage={setPage} setToken={setToken}/>
+        <Layout className="site-layout" style={{ marginLeft: contentWidth, marginTop: "2vh", transition: 'marginLeft 1s ease-in' }}>
           <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
             <div style={{position: "fixed", display:"flex", flexDirection:"column", alignItems:"flex-start"}}>
               <Avatar shape="square" size={120} src={taskAvatar}  />

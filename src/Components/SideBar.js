@@ -13,22 +13,24 @@ import {
 
 
 
-const SideBar = ({place, userId, userName, userAvatar, setValid, setPage, setToken}) => {
+const SideBar = ({setContentWidth,collapsed, setCollapsed, place, userId, userName, userAvatar, setValid, setPage, setToken}) => {
     let navigate = useNavigate();
-    const [collapsed, setCollapsed] = useState(false)
+    // const [collapsed, setCollapsed] = useState(false)
     const { Content, Sider } = Layout;
     const { SubMenu } = Menu;
 
     // Typology default setting
     const { Title } = Typography;
-
+    setContentWidth(collapsed ? "8vw" : "20vw");
     return(
-        <Sider theme="light" collapsible collapsed={collapsed} onCollapse={() => setCollapsed(!collapsed)}       
+        <Sider theme="light" collapsible collapsed={collapsed} onCollapse={() => {setCollapsed(!collapsed);}}       
         style={{
-        overflow: 'auto',
-        height: '100vh',
-        position: 'fixed',
-        left: 0,
+          overflow: 'auto',
+          height: '100vh',
+          position: 'fixed',
+          left: 0,
+          top: 0,
+          bottom: 0,
     }}>
       <div className="logo" />
       {/* Link FE待修正 */}

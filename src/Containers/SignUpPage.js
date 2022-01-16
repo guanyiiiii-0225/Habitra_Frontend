@@ -101,18 +101,28 @@ const SignUpPage = () => {
         }
       }
     return (
-        <>
+        <div className='default_background'>
             <h1 className="login_title">Sign Up</h1>
-            {/* 這邊放一個選取頭像的位置，點選可以開啟pop up */}
+            
+            {
+                        myAvatarUrl === ""
+                        ?
+                        // 可以點擊並且選取自己想要的avatar
+                        <Avatar size={64} icon={<UserOutlined />} onClick={() => setIsModalVisible(true)}  />
+                        :
+                        // 可以點即並且選取自己想要的avatar
+                        <Avatar size={64} src={myAvatarUrl} onClick={() => setIsModalVisible(true)}  />
+                    }
+            <br/>
             <div className="login_page">
                 <Form
                     name="normal_login"
                     className="login-form"
-                    initialValues={{remember: true, layout: 'vertical'}}
+                    initialValues={{remember: true}}
 
                 >
                     {/* 這邊新增一個avatar */}
-                    <Form.Item>
+                    {/* <Form.Item>
                     {
                         myAvatarUrl === ""
                         ?
@@ -122,11 +132,11 @@ const SignUpPage = () => {
                         // 可以點即並且選取自己想要的avatar
                         <Avatar size={64} src={myAvatarUrl} onClick={() => setIsModalVisible(true)}  />
                     }
-                    </Form.Item>
+                    </Form.Item> */}
                     {/* 用戶姓名 */}
                     <Form.Item
                         name="username"
-                        label="Name"
+                        // label="Name"
                         rules={[
                         {
                             required: true,
@@ -139,7 +149,7 @@ const SignUpPage = () => {
                     {/* 用戶ID  */}
                     <Form.Item
                         name="ID"
-                        label="ID"
+                        // label="ID"
                         rules={[
                         {
                             required: true,
@@ -152,7 +162,7 @@ const SignUpPage = () => {
                     {/* 用戶信箱 */}
                     <Form.Item
                         name="email"
-                        label="E-mail"
+                        // label="E-mail"
                         rules={[
                         {
                             type: 'email',
@@ -169,7 +179,7 @@ const SignUpPage = () => {
                     {/* 用戶密碼 */}
                     <Form.Item
                         name="password"
-                        label="Password"
+                        // label="Password"
                         rules={[
                         {
                             required: true,
@@ -183,7 +193,7 @@ const SignUpPage = () => {
                     {/* 用戶密碼確認 */}
                     <Form.Item
                         name="confirm"
-                        label="Confirm Password"
+                        // label="Confirm Password"
                         dependencies={['password']}
                         hasFeedback
                         rules={[
@@ -201,15 +211,16 @@ const SignUpPage = () => {
                         }),
                         ]}
                     >
-                        <Input.Password />
+                        <Input.Password placeholder="Confirmed Password" style={{ width: "30vw" }} />
                     </Form.Item>
                     {/* 送出按鈕 */}
                     <Form.Item>
-                        <Button type="primary" htmlType="submit" className="wide-form-button" onClick={handleSignUp}>
+                        <Button type="primary" block htmlType="submit" className="wide-form-button" onClick={handleSignUp}>
                             Sign Up
                         </Button>
-                        Already have an Account?  <a href="/">Login</a>
                     </Form.Item>
+                    Already have an Account?  <a href="/login">Login</a>
+
                 </Form>
 
                 {/* 記得傳入ok的時候所使用的頭像url，並且在function中set他 */}
@@ -228,7 +239,7 @@ const SignUpPage = () => {
                 </Modal>
 
             </div>
-        </>
+        </div>
     );
 }
 
