@@ -15,6 +15,10 @@ const LoginPage = ({setValid, setIsLogin, setToken, userId, setUserId}) => {
         if(userId !== "" && password!==""){
             const response = await login({user_id: userId, password: password});
             console.log(response);
+            if(response == false){
+                message.error("the password is wrong.");
+                return;
+            }
             setToken(response);
             setIsLogin(true);
             setValid(true);
