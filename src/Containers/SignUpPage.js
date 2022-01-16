@@ -1,4 +1,4 @@
-import { Form, Input, Button, Avatar, message, Modal, Collapse } from 'antd';
+import { Form, Input, Button, Avatar, message, Modal, Collapse, Tooltip } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import React, {useState, useEffect} from 'react';
 import { useNavigate, Link } from "react-router-dom";
@@ -43,8 +43,7 @@ const SignUpPage = () => {
         avatarTypeNum += 1;
           return(
             <Panel header= {type} key={avatarTypeNum}>
-                {/* 這邊要增加選取後的外框狀態 */}
-                    {avatarUrl[type].map(url => (<Avatar size={64} src={url} onClick={(e) => {setMyAvatarUrl(e.target.src);}}/>))}
+                    {avatarUrl[type].map(url => (<Avatar style={{cursor: 'pointer'}} size={64} src={url} onClick={(e) => {setMyAvatarUrl(e.target.src);setIsModalVisible(false)}}/>))}
             </Panel>
           )
       }
@@ -102,17 +101,18 @@ const SignUpPage = () => {
       }
     return (
         <div className='default_background'>
-            <h1 className="login_title">Sign Up</h1>
-            
+            {/* <h1 className="login_title">Sign Up</h1> */}
+            <Tooltip title="選擇頭像" placement="right">
             {
                         myAvatarUrl === ""
                         ?
                         // 可以點擊並且選取自己想要的avatar
-                        <Avatar size={64} icon={<UserOutlined />} onClick={() => setIsModalVisible(true)}  />
+                        <Avatar style={{cursor: 'pointer'}} size={64} icon={<UserOutlined />} style={{cursor: 'pointer'}} onClick={() => setIsModalVisible(true)}  />
                         :
                         // 可以點即並且選取自己想要的avatar
-                        <Avatar size={64} src={myAvatarUrl} onClick={() => setIsModalVisible(true)}  />
-                    }
+                        <Avatar style={{cursor: 'pointer'}} size={64} src={myAvatarUrl} style={{cursor: 'pointer'}} onClick={() => setIsModalVisible(true)}  />
+            }
+            </Tooltip>
             <br/>
             <div className="login_page">
                 <Form
@@ -121,18 +121,6 @@ const SignUpPage = () => {
                     initialValues={{remember: true}}
 
                 >
-                    {/* 這邊新增一個avatar */}
-                    {/* <Form.Item>
-                    {
-                        myAvatarUrl === ""
-                        ?
-                        // 可以點擊並且選取自己想要的avatar
-                        <Avatar size={64} icon={<UserOutlined />} onClick={() => setIsModalVisible(true)}  />
-                        :
-                        // 可以點即並且選取自己想要的avatar
-                        <Avatar size={64} src={myAvatarUrl} onClick={() => setIsModalVisible(true)}  />
-                    }
-                    </Form.Item> */}
                     {/* 用戶姓名 */}
                     <Form.Item
                         name="username"
@@ -225,12 +213,12 @@ const SignUpPage = () => {
 
                 {/* 記得傳入ok的時候所使用的頭像url，並且在function中set他 */}
                 <Modal title="請選取你想要的頭像" visible={isModalVisible} onCancel={() =>handleCancel()} footer={[
-                    <Button key="back" onClick={() => {setMyAvatarUrl("");}}>
+                    <Button key="back" onClick={() => {setMyAvatarUrl("");setIsModalVisible(false);}}>
                     撤銷頭像
                     </Button>,
-                    <Button key="back" type="primary" onClick={() => handleCancel()}>
-                    完成
-                    </Button>
+                    // <Button key="back" type="primary" onClick={() => handleCancel()}>
+                    // 完成
+                    // </Button>
                 ]}
                 >
                 <Collapse defaultActiveKey={['1']} onChange={callback} accordion>

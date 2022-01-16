@@ -30,7 +30,7 @@ const TaskMainPage = ({setToken, setValid, userId, token}) => {
     // default settings
     const { TextArea } = Input;
     const {Title, Text} = Typography;
-    const { Content } = Layout;
+    const { Content, Header } = Layout; 
     let {taskId} = useParams();
     // console.log(taskID);
     const [page, setPage] = useState(1);
@@ -125,20 +125,25 @@ const TaskMainPage = ({setToken, setValid, userId, token}) => {
     return(
         <Layout style={{ minHeight: '100vh' }}>
         <SideBar place = "taskMainPage" setContentWidth={setContentWidth} collapsed={collapsed} setCollapsed={setCollapsed} userId = {userId} userName={userName} userAvatar={userAvatar} setValid={setValid}  setPage={setPage} setToken={setToken}/>
-        <Layout className="site-layout" style={{ marginLeft: contentWidth, marginTop: "2vh", transition: 'marginLeft 1s ease-in' }}>
-          <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
-            <div style={{position: "fixed", display:"flex", flexDirection:"column", alignItems:"flex-start"}}>
+        <Layout className="site-layout" style={{ marginLeft: contentWidth, transition: 'marginLeft 1s ease-in' }}>
+        {/* style={{ position: 'fixed', zIndex: 1, width: '100%' }} */}
+        <Header style={{height: "33vh",position: "fixed",zIndex: 1, width: '100%', backgroundColor: "#F0F2F5"}}>
+          <div style={{display: "flex", flexDirection: "column", alignItems: "flex-start"}}>
+          {/* <br/> */}
               <Avatar shape="square" size={120} src={taskAvatar}  />
               {
                 manager
                 ?
-                <Tag color="#ffa940" icon={<Icon icon="icon-park-outline:crown-three" color="#fff7e6" height="10" />}> 管理者</Tag>
+                <Tag color="#ffa940" icon={<Icon icon="icon-park-outline:crown-three" color="#fff7e6" />}> 管理者</Tag>
                 :
                 <br/>
               }
               <Title level={2}>{taskName}</Title>
               <Divider></Divider>
             </div>
+        </Header>
+          
+          <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
             <div style={{marginTop: "33vh"}}>
             {
                   page === 1

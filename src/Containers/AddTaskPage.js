@@ -1,4 +1,4 @@
-import { Modal, Avatar, message, Switch, Typography, Divider, Form, Input, TimePicker, Select, Checkbox, Row, Col, Button, Space   } from 'antd';
+import { Tooltip,Modal, Avatar, message, Switch, Typography, Divider, Form, Input, TimePicker, Select, Checkbox, Row, Col, Button, Space   } from 'antd';
 import moment from 'moment';
 import { useState, useEffect } from 'react';
 import { addTask, addNewAdmin, addNewMember, getAllIcon } from '../axios';
@@ -127,20 +127,23 @@ const AddTaskPage = ({token, userId}) => {
 
     return(
         <div className='addtask_background'>
-        <div style={ {marginLeft: '30px', marginTop: '30px', marginRight: '100px'}}>
-            <Title level={3}>新增任務</Title>
-            {/* <Divider orientation="left">任務規範</Divider> */}
+        <div style={ {marginLeft: '30px', marginTop: '30px', marginRight: '100px', marginBottom: "1%"}}>
+            <Title level={2} style={{textAlign: "center"}}>新增任務</Title>
+            <br/>
             <Form
                     name="normal_login"
                     className="login-form"
                     initialValues={{remember: true, layout: 'vertical'}}
                     style={{display: "flex", flexDirection: "column"}}
             >
-                <Form.Item
+                <Form.Item 
+                        style={{cursor: 'pointer'}}
                         name="avatar"
                         label="任務圖標"
                     >
-                     <Avatar shape="square" size={100} src={taskIcon} onClick={() => setTaskListOpen(true)}  />
+                    <Tooltip title="選取任務icon" placement="right">
+                        <Avatar shape="square" size={100} src={taskIcon} onClick={() => setTaskListOpen(true)}  />
+                     </Tooltip>
                 </Form.Item>
 
                 {/* 打卡區間 */}
@@ -219,21 +222,23 @@ const AddTaskPage = ({token, userId}) => {
                 >
                     <Switch checkedChildren="開啟" unCheckedChildren="關閉" defaultChecked={false} onChange={setNeed_daily_desc}/>
                 </Form.Item>
-                <Form.Item>
-                        <Button className="wide-form-button" onClick={() => navigate("/")} >
+                <Form.Item style={{display: "flex", alignItems: "flex-end", marginLeft: "70%"}}>
+                        <Button className="wide-form-button" onClick={() => navigate("/")} style={{marginRight: "5%"}}>
                             返回
                         </Button>
                         <Button type="primary" htmlType="submit" className="wide-form-button" onClick={handleLogin}>
                             送出
                         </Button>
-                    </Form.Item>
+                </Form.Item>
 
             </Form> 
             <Modal title="請選取你想要的圖標" visible={taskListOpen} onCancel={() =>{setTaskListOpen(false);}} footer={[]}
             >
                 {/* <Collapse defaultActiveKey={['1']} onChange={callback} accordion> */}
-                {taskIconList.map(url => (<Avatar shape="square" style = {{margin: "6px"}} size={64} src={url} onClick={(e) => {setTaskIcon(e.target.src);setTaskListOpen(false);}}/>))}
                 {/* </Collapse> */}
+                <Space size={16} wrap>
+                    {taskIconList.map(url => (<Avatar style={{cursor: 'pointer'}} shape="square" size={64} src={url} onClick={(e) => {setTaskIcon(e.target.src);setTaskListOpen(false);}}/>))}
+                </Space>
             </Modal>
 
         </div>

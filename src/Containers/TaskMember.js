@@ -19,7 +19,9 @@ const TaskMenber = ({taskId, userId, token, userName}) => {
             key: 'isMgr',
             width: 50,
             dataIndex: 'isMgr',
-            render: tag => tag === true ? <Tooltip placement="right" title="任務主人"><Icon icon="emojione:crown" color="black" height="20" /></Tooltip> : <></>,
+            render: tag => tag === true ? <Tooltip placement="right" title="任務主人"><Icon icon="icon-park-outline:crown-three" color="black" height="20" />
+
+            </Tooltip> : <></>,
           },
         {
           title: '姓名',
@@ -93,6 +95,7 @@ const TaskMenber = ({taskId, userId, token, userName}) => {
             await deleteUserParticipation({task_id: taskId, user_id: deletedUserId[i], token: token});
         }
         setRefresh(!refresh);
+        message.success("成功刪除");
         setState({selectedRowKeys: [], });
     }
 
@@ -152,11 +155,27 @@ const TaskMenber = ({taskId, userId, token, userName}) => {
         setShowAddMemberModal(false);
         setAddMemberList([]);
         setOpenDelete(false);
+        message.success("成功新增");
     }
 
     return(
         <>
-            <Table columns={columns} rowSelection={openDelete && isMgr ? rowSelection : undefined}  dataSource={member} size='small' title={isMgr ? !openDelete ? () => <Button onClick={() => setOpenDelete(!openDelete)}>編輯</Button> : () => <Button type='primary' onClick={() => setShowAddMemberModal(true)}>新增成員</Button> : undefined} footer={openDelete ? () => (<><Button onClick={() => {setOpenDelete(!openDelete);setState({selectedRowKeys: [], });}}>取消</Button><Button danger type='primary' onClick={() => handleDelete()}>刪除</Button></>) : undefined}/>
+            <Table 
+                columns={columns} 
+                rowSelection={openDelete && isMgr ? rowSelection : undefined}  
+                dataSource={member} size='small' 
+                title={isMgr 
+                    ? !openDelete 
+                    ? () => <Button onClick={() => setOpenDelete(!openDelete)}>編輯</Button> 
+                    : () => <Button style={{marginLeft: "90%"}}type='primary' onClick={() => setShowAddMemberModal(true)}>新增成員</Button> 
+                    : undefined} 
+                footer={openDelete 
+                    ? () => (
+                    <div style={{marginLeft: "85%"}}>
+                        <Button onClick={() => {setOpenDelete(!openDelete);setState({selectedRowKeys: [], });}}>取消</Button>
+                        <Button style={{marginLeft: "5%"}} danger type='primary' onClick={() => handleDelete()}>刪除</Button>
+                    </div>) : undefined}
+                />
             <Modal title="新增成員" visible={showAddMemberModal} onCancel={() => {setShowAddMemberModal(false);setAddMemberList([]);}} onOk={() => {handleSendAddMember();}} >
             {/* <Text >寫下任何的想法都可以喔！</Text> */}
             <Search placeholder="input search text"  style={{ width: 200 }} onSearch={onSearch} loading={isSearching}  enterButton />

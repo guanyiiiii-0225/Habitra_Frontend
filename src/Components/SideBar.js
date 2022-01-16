@@ -31,6 +31,7 @@ const SideBar = ({setContentWidth,collapsed, setCollapsed, place, userId, userNa
           left: 0,
           top: 0,
           bottom: 0,
+          zIndex: 2
     }}>
       <div className="logo" />
       {/* Link FE待修正 */}
@@ -42,14 +43,9 @@ const SideBar = ({setContentWidth,collapsed, setCollapsed, place, userId, userNa
         <></>
         :
         <>
-            {/* <Link to={'/'}> */}
               <Title level={3}>
                 {userName}
               </Title>
-            {/* </Link> */}
-            {/* <Menu.Item key="0"  onClick={() => setPage(5)}>
-                 {userName}
-            </Menu.Item> */}
             <Button type="text" size='small' onClick={() => {setValid(false);setToken("");navigate("/login");}}>登出</Button>
         </>
         }
@@ -72,7 +68,14 @@ const SideBar = ({setContentWidth,collapsed, setCollapsed, place, userId, userNa
         :
         <>
           <Tooltip title="回到首頁" placement="right">
-            <Button type="circle" icon={<CaretLeftOutlined />} size='small' onClick={() => {navigate('/')}}></Button> 
+            {
+              collapsed
+              ?
+              <></>
+              :
+              <Button style={{marginLeft: "10%", marginBottom: "5%"}}type="circle" icon={<CaretLeftOutlined />} size='small' onClick={() => {navigate('/')}}></Button> 
+
+            }
           </Tooltip>
           <Menu theme="light" defaultSelectedKeys={["1"]} mode="inline">
             <Menu.Item key="1" icon={<FileOutlined />} onClick={() => setPage(1)}>

@@ -7,7 +7,7 @@ import StatsInfoCard from '../Components/StatsInfoCard';
 import { getDurationOpen, getPeriodRecord, getTaskDetail, getTask } from '../axios';
 import moment from 'moment';
 
-const PersonalStats = ({userId, token}) => {
+const PersonalStats = ({userId, token}) => { 
 
     // default settings
     const formatDate = (date)=>{
@@ -135,11 +135,13 @@ const PersonalStats = ({userId, token}) => {
       };
 
     return(
-        <>
+        <div style={{marginRight: "5%"}}>
             <DatePicker defaultValue = {moment}onChange={(e) => weekOnChange(e._d)} picker="week" allowClear={false}/>
+            <br/>
+            <br/>
             <DemoColumn />
             <StatsInfoCard achieveTotalCount={achieveCount.reduce((a, b) => a + b, 0)} expectedTotalCount={expectedTotalCount} />
-        </>
+        </div>
         
     )
 }

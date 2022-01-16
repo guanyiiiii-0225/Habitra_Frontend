@@ -6,7 +6,7 @@
 
 1. 錢包
 (1) Modal: List(頭貼. 名字. 欠的錢. 清空案件, 關閉案件)
-2. 長條圖
+2. 長條圖 
  */
 import { Column } from '@ant-design/plots';
 import { useState, useEffect } from "react";
@@ -29,7 +29,7 @@ const TaskStats = ({taskId, token, userId}) => {
     align-items: left;
     height: 100px;
     width: 500px;
-    margin: 2%;
+    margin-bottom: 2%;
     border: 20px white solid;
 
     
@@ -65,10 +65,11 @@ const TaskStats = ({taskId, token, userId}) => {
     const [unfinishTaskMemberInfo, setUnfinishTaskMemberInfo] = useState([])
 
     //總欠款: 接memberInfo的時候要加總
+    var today = new Date();
     const [totalArrear, setTotalArrear] = useState(sum(oweMemberInfo, "Punish_sum"));
     const [isMgr, setIsMgr] = useState(true);
-    const [startDate, setStartDate]=  useState("");
-    const [endDate, setEndDate]=  useState("");
+    const [startDate, setStartDate]=  useState(formatDate(today));
+    const [endDate, setEndDate]=  useState(formatDate(new Date(today.setDate(today.getDate() - today.getDay()+6))));
     const [selectedDate, setSelectedDate] = useState("");
     const [achieveCount, setAchieveCount] = useState([0,0,0,0,0,0,0]);
     const [refresh, setRefresh] = useState(false);
@@ -208,7 +209,8 @@ const TaskStats = ({taskId, token, userId}) => {
 
 
     return(
-        <>
+        <div style={{display: "flex", flexDirection: "column",justifyContent: "center"}}>
+          <Title level={3}>金額資訊</Title>
             <CardOutline onClick={() => setOpenModal(!openModal) } style={{cursor: 'pointer'}}>
                 <Statistic title="累積金額 (NTD)" value={totalArrear} precision={0} />
             </CardOutline>
@@ -231,15 +233,23 @@ const TaskStats = ({taskId, token, userId}) => {
                     </List.Item>
                     )}
                 />
-                {/* <Divider ></Divider> */}
             </Modal>
-            <DatePicker defaultValue={moment()} onChange={(e) => weekOnChange(e._d)} picker="week" allowClear={false}/>
+            <br/>
+            <Title level={3}>每周統計</Title>
+            <div>
+              <DatePicker  defaultValue={moment()} onChange={(e) => weekOnChange(e._d)} picker="week" allowClear={false}/>
+            </div>
+            <br/>
+            
             <DemoColumn />
+            <br/>
+            
+            <h1>{selectedDate}</h1>            
             <Row>
                 <Col span={12}>
-                    <Row>
+                    <Row style={{display: "flex", alignItems: "flex-end",}}>
                         <Icon icon="flat-ui:trash" color="black" height="50" />
-                        <Title level={3}>未完成</Title>
+                        <Title level={3} style={{marginLeft: "2%"}}>未完成</Title>
                     </Row>
                     <List
                     itemLayout="horizontal"
@@ -247,7 +257,7 @@ const TaskStats = ({taskId, token, userId}) => {
                     renderItem={item => (
                         <List.Item>
                             <List.Item.Meta
-                            avatar={<Avatar src={item.Avatar} />}
+                            avatar={<Avatar size={45} src={item.Avatar} />}
                             title={<Text >{item.User_Name}</Text>}
                             description={<Text >{item.frequency}次</Text>}
                             />
@@ -256,9 +266,9 @@ const TaskStats = ({taskId, token, userId}) => {
                 />
                 </Col>
                 <Col span={12}>
-                    <Row>
+                    <Row style={{display: "flex", alignItems: "flex-end",}}>
                         <Icon icon="emojione:1st-place-medal" color="black" height="50" />
-                        <Title level={3}>已完成</Title>
+                        <Title level={3} style={{marginLeft: "2%"}}>已完成</Title>
                     </Row>
                     <List
                     itemLayout="horizontal"
@@ -266,7 +276,7 @@ const TaskStats = ({taskId, token, userId}) => {
                     renderItem={item => (
                     <List.Item>
                         <List.Item.Meta
-                        avatar={<Avatar src={item.Avatar} />}
+                        avatar={<Avatar size={45} src={item.Avatar} />}
                         title={<Text >{item.User_Name}</Text>}
                         description={<Text >{item.frequency}次</Text>}
                         />
@@ -276,7 +286,7 @@ const TaskStats = ({taskId, token, userId}) => {
                 </Col>
             </Row>
             
-        </>
+        </div>
     )
 }
 

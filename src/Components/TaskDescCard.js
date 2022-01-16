@@ -14,7 +14,7 @@ const TaskDescCard = ({done, desc}) => {
     justify-content: center;
     align-items: left;
     height: 100px;
-    width: 500px;
+    width: 90%;
     margin: 2%;
     border: 20px white solid;
 

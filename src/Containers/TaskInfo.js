@@ -26,9 +26,9 @@ const TaskInfo = ({taskId, token, userId}) => {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    width: 90%;
+    width: 98%;
     margin-top: 2%;
-    border: 2px red solid;
+    border: 1px red solid;
     padding: 1%;
 
     
@@ -105,7 +105,7 @@ const TaskInfo = ({taskId, token, userId}) => {
         setIsQuit(res_2.Is_Quit);
       }, []);
     return(
-        <>
+        <div style={{marginBottom: "1vh"}}> 
             <Title level={3}>任務簡介</Title>
             <Text>{taskDescription}</Text>
             <Title level={3}>任務規則</Title>
@@ -117,7 +117,7 @@ const TaskInfo = ({taskId, token, userId}) => {
             >
             <Descriptions.Item label="任務開始時間">{taskOpenDate}</Descriptions.Item>
             {
-                isClosed
+                isClosed 
                 ?
                 <Descriptions.Item label="任務結束時間">{taskCloseDate}</Descriptions.Item>
                 :
@@ -129,15 +129,6 @@ const TaskInfo = ({taskId, token, userId}) => {
             <Descriptions.Item label="可打卡時段">{start_hour} ~ {end_hour}</Descriptions.Item>
             </Descriptions>
             <br />
-            {/* <Text>任務名稱:{taskName}</Text>
-            <br />
-            <Text>需打卡次數:{threshold}</Text>
-            <br />
-            <Text>懲罰機制（罰金）:{punish}</Text>
-            <br />
-            <Text>是否需上傳文字:{need_daily_desc?"是":"否"}</Text>
-            <br />
-            <Text>可打卡時段:{start_hour} ~ {end_hour}</Text> */}
             {
                 isManager
                 ?
@@ -169,7 +160,7 @@ const TaskInfo = ({taskId, token, userId}) => {
                 <></>
             }
 
-        </>
+        </div>
         
     )
 }

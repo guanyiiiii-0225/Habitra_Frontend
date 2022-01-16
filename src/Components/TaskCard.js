@@ -23,27 +23,23 @@ const TaskCard = ({uid, icon, name, isClosed, isQuit}) => {
         box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
         border-radius: 17px;
      `
-
+    
     
 
      return(
          <>
          {/* <Link to={`/task/${uid}`}> */}
             <Card style={{cursor: 'pointer'}} onClick={() => navigate('/task/'+uid )}>
+            
+                <div style={{display:"flex", flexDirection:"column", alignItems:"flex-start"}}>
                 {
                     isClosed
                     ?
                     <Tag color="#f50">已關閉</Tag>
                     :
-                    <></>
+                    <br/>
                 }
-                {
-                    isQuit
-                    ?
-                    <Tag color="#f50">已退出</Tag>
-                    :
-                    <></>
-                }
+                </div>
                 <Avatar shape="square" size="large" src={icon} />
                 <div style={{fontSize: 1}}>{name}</div>
             </Card>

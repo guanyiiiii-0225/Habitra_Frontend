@@ -2,6 +2,7 @@ import './App.css';
 import {useState, useEffect} from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import 'antd/dist/antd.css';
+import {Spin} from 'antd';
 
 import { testToken } from './axios';
 
@@ -47,8 +48,17 @@ function App() {
     }
   }, [valid, isLogin])
 
+  // const [showLoading, setShowLoading] = useState(true);
+
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     setShowLoading(false);
+  //   }, 2000);
+  // }, []);
+
 
   return (
+    
     <BrowserRouter>
       <Routes>
         {/* public route */}
@@ -64,6 +74,7 @@ function App() {
         <Route path='/task/:taskId' element={isLogin ? <TaskMainPage setToken={setToken} setValid={setValid} userId={userId} token={token}/> : <Navigate to="/login" />}></Route>
       </Routes>
       </BrowserRouter>
+      
   );
 }
 
