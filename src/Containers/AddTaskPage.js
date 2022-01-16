@@ -232,7 +232,7 @@ const AddTaskPage = ({token, userId}) => {
             <Modal title="請選取你想要的圖標" visible={taskListOpen} onCancel={() =>{setTaskListOpen(false);}} footer={[]}
             >
                 {/* <Collapse defaultActiveKey={['1']} onChange={callback} accordion> */}
-                {taskIconList.map(url => (<Avatar shape="square" size={64} src={url} onClick={(e) => {setTaskIcon(e.target.src);setTaskListOpen(false);}}/>))}
+                {taskIconList.map(url => (<Avatar shape="square" style = {{margin: "6px"}} size={64} src={url} onClick={(e) => {setTaskIcon(e.target.src);setTaskListOpen(false);}}/>))}
                 {/* </Collapse> */}
             </Modal>
 
