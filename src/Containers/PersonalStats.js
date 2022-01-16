@@ -1,5 +1,5 @@
 // 這...這個還沒...我考完試再來寫（大概四點多）
-import { DatePicker, Space } from 'antd';
+import { DatePicker, Space, Typography } from 'antd';
 import React, { useState, useEffect } from 'react';
 // import ReactDOM from 'react-dom';
 import { Column } from '@ant-design/plots';
@@ -9,7 +9,9 @@ import moment from 'moment';
 
 const PersonalStats = ({userId, token}) => { 
 
+  
     // default settings
+    const {Title} = Typography;
     const formatDate = (date)=>{
       var str1 = date.getMonth() + 1;
       var str2 = date.getDate();
@@ -131,16 +133,21 @@ const PersonalStats = ({userId, token}) => {
             },
           },
         };
-        return <Column {...config} />;
+        return <Column {...config}  />;
       };
-
+      function disabledDate(current) {
+        // Can not select days before today and today
+        return current && current > moment().endOf('day');
+      }
     return(
         <div style={{marginRight: "5%"}}>
-            <DatePicker defaultValue = {moment}onChange={(e) => weekOnChange(e._d)} picker="week" allowClear={false}/>
+            <Title level={3}> 戰績檢視</Title>
+            <StatsInfoCard achieveTotalCount={achieveCount.reduce((a, b) => a + b, 0)} expectedTotalCount={expectedTotalCount} />
+            <Title level={3}> 一周統整</Title>
+            <DatePicker defaultValue = {moment}onChange={(e) => weekOnChange(e._d)} picker="week" allowClear={false} disabledDate={disabledDate}/>
             <br/>
             <br/>
             <DemoColumn />
-            <StatsInfoCard achieveTotalCount={achieveCount.reduce((a, b) => a + b, 0)} expectedTotalCount={expectedTotalCount} />
         </div>
         
     )

@@ -88,7 +88,7 @@ const TaskMainPage = ({setToken, setValid, userId, token}) => {
     const handleOk = async () => {
         setIsModalVisible(false);
         const res = await addRecord({user_id: userId, task_id: taskId, daily_desc: typedDesc, token: token});
-        console.log(res);
+        console.log("res = ", res);
         message.success('成功打卡！');
     };
 
@@ -125,16 +125,17 @@ const TaskMainPage = ({setToken, setValid, userId, token}) => {
     return(
         <Layout style={{ minHeight: '100vh' }}>
         <SideBar place = "taskMainPage" setContentWidth={setContentWidth} collapsed={collapsed} setCollapsed={setCollapsed} userId = {userId} userName={userName} userAvatar={userAvatar} setValid={setValid}  setPage={setPage} setToken={setToken}/>
-        <Layout className="site-layout" style={{ marginLeft: contentWidth, transition: 'marginLeft 1s ease-in' }}>
+        <Layout width="100%" className="site-layout" style={{ marginLeft: contentWidth }}>
         {/* style={{ position: 'fixed', zIndex: 1, width: '100%' }} */}
-        <Header style={{height: "33vh",position: "fixed",zIndex: 1, width: '100%', backgroundColor: "#F0F2F5"}}>
-          <div style={{display: "flex", flexDirection: "column", alignItems: "flex-start"}}>
-          {/* <br/> */}
+        <Header style={{height: "40vh",position: "fixed",zIndex: 1, width: '100%', backgroundColor: "#F0F2F5"}}>
+          <div style={{marginTop: "2%", display: "flex", flexDirection: "column", alignItems: "flex-start"}}>
               <Avatar shape="square" size={120} src={taskAvatar}  />
               {
                 manager
                 ?
-                <Tag color="#ffa940" icon={<Icon icon="icon-park-outline:crown-three" color="#fff7e6" />}> 管理者</Tag>
+                <>
+                <Tag style={{marginTop: "2%"}} color="#ffa940" icon={<Icon icon="icon-park-outline:crown-three" color="#fff7e6" />}> 管理者</Tag>
+                </>
                 :
                 <br/>
               }
@@ -143,8 +144,8 @@ const TaskMainPage = ({setToken, setValid, userId, token}) => {
             </div>
         </Header>
           
-          <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
-            <div style={{marginTop: "33vh"}}>
+          <Content style={{ margin: '0 16px 0 0', overflow: 'initial' }}>
+            <div style={{marginTop: "42vh"}}>
             {
                   page === 1
                   ?

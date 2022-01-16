@@ -17,7 +17,7 @@ const StatsInfoCard = ({achieveTotalCount, expectedTotalCount}) => {
     align-items: left;
     height: 100px;
     width: 500px;
-    margin: 2%;
+    margin-bottom: 2%;
     border: 20px white solid;
 
     
@@ -29,8 +29,8 @@ const StatsInfoCard = ({achieveTotalCount, expectedTotalCount}) => {
     return(
         <>
         <CardOutline>
-            <Text>本周打卡總次數:{achieveTotalCount}</Text>
-            <Text>預計應打卡總次數:{expectedTotalCount}</Text>
+            <Text>本周打卡總次數:&ensp;{achieveTotalCount}</Text>
+            <Text>預計應打卡總次數:&ensp;{expectedTotalCount}</Text>
             <Progress percent={achieveTotalCount / expectedTotalCount * 100} showInfo={false} />
         </CardOutline>
         </>

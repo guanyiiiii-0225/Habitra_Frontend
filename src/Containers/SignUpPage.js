@@ -86,7 +86,7 @@ const SignUpPage = () => {
             // setTimeout(successMsg, 5000);
             console.log("status = ", response);
             if(response === 'success') {
-                message.success('註冊成功，即將跳轉到登入頁面...');
+                message.success('註冊成功');
                 navigate("/login");
                 // setLogin(true);
                 // setName(userName);
@@ -123,12 +123,12 @@ const SignUpPage = () => {
                 >
                     {/* 用戶姓名 */}
                     <Form.Item
-                        name="username"
+                        name="nickname"
                         // label="Name"
                         rules={[
                         {
                             required: true,
-                            message: '請輸入帳號名稱!',
+                            message: '請輸入暱稱!',
                         },
                         ]}
                     >

@@ -10,7 +10,7 @@
  */
 import { Column } from '@ant-design/plots';
 import { useState, useEffect } from "react";
-import {Modal, Typography, Statistic, List, Avatar, Button, message, DatePicker,Row,  Col} from 'antd';
+import {Modal, Typography, Statistic, List, Avatar, Button, message, DatePicker,Row,  Col, Collapse } from 'antd';
 import styled from "styled-components";
 import { Icon } from '@iconify/react';
 import { getRecordPunish, getUserInfo, getParticipationDetail, getTaskDetail, getRecordDetail, clearMoney, getRecordCount } from '../axios';
@@ -20,6 +20,7 @@ import moment from 'moment';
 const TaskStats = ({taskId, token, userId}) => {
 
     //default settings
+    const { Panel } = Collapse;
     const [openModal, setOpenModal] = useState(false);
     const {Title, Text} = Typography;
     const CardOutline = styled.div`
@@ -69,8 +70,8 @@ const TaskStats = ({taskId, token, userId}) => {
     const [totalArrear, setTotalArrear] = useState(sum(oweMemberInfo, "Punish_sum"));
     const [isMgr, setIsMgr] = useState(true);
     const [startDate, setStartDate]=  useState(formatDate(today));
+    const [selectedDate, setSelectedDate] = useState(formatDate(today));
     const [endDate, setEndDate]=  useState(formatDate(new Date(today.setDate(today.getDate() - today.getDay()+6))));
-    const [selectedDate, setSelectedDate] = useState("");
     const [achieveCount, setAchieveCount] = useState([0,0,0,0,0,0,0]);
     const [refresh, setRefresh] = useState(false);
 
@@ -100,6 +101,7 @@ const TaskStats = ({taskId, token, userId}) => {
 
     useEffect( async () => {
       const res_3 = await getRecordDetail({task_id: taskId, token: token, time: selectedDate});
+      console.log(selectedDate);
       console.log(res_3);
       var fin = [];
       var unfin = [];
@@ -204,7 +206,7 @@ const TaskStats = ({taskId, token, userId}) => {
             },
           },
         };
-        return <Column {...config} />;
+        return <Column {...config} style={{width: "70%", height: "40vh"}} />;
       };
 
 
@@ -234,18 +236,18 @@ const TaskStats = ({taskId, token, userId}) => {
                     )}
                 />
             </Modal>
-            <br/>
+            {/* <br/> */}
             <Title level={3}>每周統計</Title>
             <div>
               <DatePicker  defaultValue={moment()} onChange={(e) => weekOnChange(e._d)} picker="week" allowClear={false}/>
             </div>
             <br/>
-            
-            <DemoColumn />
-            <br/>
-            
-            <h1>{selectedDate}</h1>            
-            <Row>
+            <Collapse accordion>
+              <Panel header="一周統計紀錄" key="1">
+                <DemoColumn />
+              </Panel>
+              <Panel header={selectedDate+" 紀錄"} key="2">
+              <Row>
                 <Col span={12}>
                     <Row style={{display: "flex", alignItems: "flex-end",}}>
                         <Icon icon="flat-ui:trash" color="black" height="50" />
@@ -285,6 +287,15 @@ const TaskStats = ({taskId, token, userId}) => {
                 />
                 </Col>
             </Row>
+              </Panel>
+            </Collapse>
+
+            
+            <br/>
+            
+            {/* <Title level={4}>{selectedDate}</Title>   */}
+            <br/>          
+
             
         </div>
     )
