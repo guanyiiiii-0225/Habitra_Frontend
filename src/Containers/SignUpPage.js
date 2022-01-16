@@ -1,7 +1,7 @@
 import { Form, Input, Button, Avatar, message, Modal, Collapse } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import React, {useState, useEffect} from 'react';
-import { useNavigate  } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { getAvatarClass, signUp, signUpCheckId, signUpCheckEmail } from '../axios';
 
 const SignUpPage = () => {
@@ -219,7 +219,7 @@ const SignUpPage = () => {
                             Sign Up
                         </Button>
                     </Form.Item>
-                    Already have an Account?  <a href="/login">Login</a>
+                    Already have an Account?  <Link to="/login">Login</Link>
 
                 </Form>
 
