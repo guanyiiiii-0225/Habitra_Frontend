@@ -22,7 +22,7 @@ const TaskMenber = ({taskId, userId, token, userName}) => {
             render: tag => tag === true ? <Tooltip placement="right" title="任務主人"><Icon icon="emojione:crown" color="black" height="20" /></Tooltip> : <></>,
           },
         {
-          title: 'name',
+          title: '姓名',
           dataIndex: 'name',
           key: 'name',
         },
@@ -54,19 +54,21 @@ const TaskMenber = ({taskId, userId, token, userName}) => {
         t[0] = temp;
 
         const mem = await getParticipationAllMember({task_id: taskId, token: token});
+        var count = 1;
         for(var i = 0; i < mem.length; i++){
             if(mem[i].User_ID != userId){
                 var te = new Object();
-                te.key = i+1;
+                te.key = count+1;
                 te.id = mem[i].User_ID;
                 const r = await getUserInfo({user_id: mem[i].User_ID})
                 te.name = r.Name;
                 const b = await getParticipationDetail({user_id: mem[i].User_ID, task_id: taskId});
                 te.isMgr = b.Is_Admin;
-                t[i] = te;
+                t[count] = te;
+                count = count+1;
             }
         }
-        setMember(t);
+        setMember(t);  
       }, [refresh]);
 
      //functions
@@ -91,31 +93,40 @@ const TaskMenber = ({taskId, userId, token, userName}) => {
             await deleteUserParticipation({task_id: taskId, user_id: deletedUserId[i], token: token});
         }
         setRefresh(!refresh);
+        setState({selectedRowKeys: [], });
     }
 
     const onSearch = async (value) => {
         setIsSearching(true);
         const res = await getUserExist({user_id: value, task_id: taskId});
         //看value(就是memberId)有沒有在資料庫裡面
-        if(res.data){ 
-            const response = await getUserInfo({user_id: value});
-            var temp = new Object();
-            temp.id = value;
-            temp.name = response.Name;
-            setAddMemberList([...addMemberList, temp] );
+        if(addMemberList.some(obj => obj.id === value)){
+            message.error("你已輸入過此用戶!");
             setIsSearching(false);
         }
         else{
-            message.error(res.message);
-            setIsSearching(false);
+            if(res.data){ 
+                const response = await getUserInfo({user_id: value});
+                var temp = new Object();
+                temp.id = value;
+                temp.name = response.Name;
+                setAddMemberList([...addMemberList, temp] );
+                setIsSearching(false);
+            }
+            else{
+                message.error(res.message);
+                setIsSearching(false);
+            }
         }
-         
     };
-
     //table settings
     const rowSelection = {
         selectedRowKeys,
         onChange: onSelectChange,
+        getCheckboxProps: (record) => ({
+            disabled: record.name === userName, // Column configuration not to be checked
+            name: record.name,
+          }),
         selections: [
         Table.SELECTION_ALL,
         Table.SELECTION_INVERT,
@@ -140,12 +151,13 @@ const TaskMenber = ({taskId, userId, token, userName}) => {
         setMember([...member, ...t]);
         setShowAddMemberModal(false);
         setAddMemberList([]);
+        setOpenDelete(false);
     }
 
     return(
         <>
-            <Table columns={columns} rowSelection={openDelete && isMgr ? rowSelection : undefined}  dataSource={member} size='small' title={isMgr ? !openDelete ? () => <Button onClick={() => setOpenDelete(!openDelete)}>編輯</Button> : () => <Button type='primary' onClick={() => setShowAddMemberModal(true)}>新增成員</Button> : undefined} footer={openDelete ? () => (<><Button onClick={() => {setOpenDelete(!openDelete)}}>取消</Button><Button danger type='primary' onClick={() => handleDelete()}>刪除</Button></>) : undefined}/>
-            <Modal title="新增成員" visible={showAddMemberModal} onCancel={() => setShowAddMemberModal(false)} onOk={() => handleSendAddMember()} >
+            <Table columns={columns} rowSelection={openDelete && isMgr ? rowSelection : undefined}  dataSource={member} size='small' title={isMgr ? !openDelete ? () => <Button onClick={() => setOpenDelete(!openDelete)}>編輯</Button> : () => <Button type='primary' onClick={() => setShowAddMemberModal(true)}>新增成員</Button> : undefined} footer={openDelete ? () => (<><Button onClick={() => {setOpenDelete(!openDelete);setState({selectedRowKeys: [], });}}>取消</Button><Button danger type='primary' onClick={() => handleDelete()}>刪除</Button></>) : undefined}/>
+            <Modal title="新增成員" visible={showAddMemberModal} onCancel={() => {setShowAddMemberModal(false);setAddMemberList([]);}} onOk={() => {handleSendAddMember();}} >
             {/* <Text >寫下任何的想法都可以喔！</Text> */}
             <Search placeholder="input search text"  style={{ width: 200 }} onSearch={onSearch} loading={isSearching}  enterButton />
             <Divider ></Divider>

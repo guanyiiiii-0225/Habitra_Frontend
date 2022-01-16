@@ -4,8 +4,13 @@ import { useNavigate, Link } from "react-router-dom";
 import {
     TeamOutlined,
     AreaChartOutlined,
-    CaretLeftOutlined
+    CaretLeftOutlined,
+    FileOutlined,
+    InfoCircleOutlined,
+    BarChartOutlined,
+    UserOutlined
   } from '@ant-design/icons';
+
 
 
 const SideBar = ({place, userId, userName, userAvatar, setValid, setPage, setToken}) => {
@@ -35,24 +40,31 @@ const SideBar = ({place, userId, userName, userAvatar, setValid, setPage, setTok
         <></>
         :
         <>
-            <Title level={3} onClick={() => {setPage(3)}} style={{cursor: 'pointer'}}>
-              {userName}
-                {/* <Link to={`/userInfo/${userId}`}>{userName}</Link> */}
-            </Title>
-            <Button type="text" size='small' onClick={() => {setValid(false);setToken("");}}>登出</Button>
+            {/* <Link to={'/'}> */}
+              <Title level={3}>
+                {userName}
+              </Title>
+            {/* </Link> */}
+            {/* <Menu.Item key="0"  onClick={() => setPage(5)}>
+                 {userName}
+            </Menu.Item> */}
+            <Button type="text" size='small' onClick={() => {setValid(false);setToken("");navigate("/login");}}>登出</Button>
         </>
         }
       </div>
-      {/* 在這邊設定一下要使用mainPage or taskMainPage */}
       {
         place === 'mainPage'
         ?
         <Menu theme="light" defaultSelectedKeys={["1"]} mode="inline">
+
         <Menu.Item key="1" icon={<TeamOutlined />} onClick={() => setPage(1)}>
             團隊任務
         </Menu.Item>
         <Menu.Item key="2" icon={<AreaChartOutlined />} onClick={() => setPage(2)}>
             統計資料
+        </Menu.Item>
+        <Menu.Item key="0" icon={<UserOutlined />} onClick={() => setPage(5)}>
+            個人資料
         </Menu.Item>
       </Menu>
         :
@@ -61,16 +73,16 @@ const SideBar = ({place, userId, userName, userAvatar, setValid, setPage, setTok
             <Button type="circle" icon={<CaretLeftOutlined />} size='small' onClick={() => {navigate('/')}}></Button> 
           </Tooltip>
           <Menu theme="light" defaultSelectedKeys={["1"]} mode="inline">
-            <Menu.Item key="1" icon={<TeamOutlined />} onClick={() => setPage(1)}>
+            <Menu.Item key="1" icon={<FileOutlined />} onClick={() => setPage(1)}>
                 任務主頁
             </Menu.Item>
-            <Menu.Item key="2" icon={<AreaChartOutlined />} onClick={() => setPage(2)}>
+            <Menu.Item key="2" icon={<InfoCircleOutlined />} onClick={() => setPage(2)}>
                 詳細資訊
             </Menu.Item>
-            <Menu.Item key="3" icon={<AreaChartOutlined />} onClick={() => setPage(3)}>
+            <Menu.Item key="3" icon={<TeamOutlined />} onClick={() => setPage(3)}>
                 成員清單
             </Menu.Item>
-            <Menu.Item key="4" icon={<AreaChartOutlined />} onClick={() => setPage(4)}>
+            <Menu.Item key="4" icon={<BarChartOutlined />} onClick={() => setPage(4)}>
                 統計資訊
             </Menu.Item>
         </Menu>

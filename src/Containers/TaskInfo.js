@@ -12,14 +12,15 @@ avatar
 
 import styled from "styled-components";
 import { useState, useEffect } from "react";
-import { Typography, Button, Avatar } from "antd";
+import { Typography, Button, message, Descriptions } from "antd";
 import moment from "moment";
 import { getTask, getParticipationDetail, closeTask, deleteTask, quitParticipation } from '../axios';
+import { useNavigate } from "react-router-dom";
 const TaskInfo = ({taskId, token, userId}) => {
 
     //default settings
     const {Title, Text} = Typography;
-
+    const navigate = useNavigate();
     const DangerZone = styled.div`
     display: flex;
     flex-direction: row;
@@ -65,17 +66,22 @@ const TaskInfo = ({taskId, token, userId}) => {
         const res = await closeTask({task_id: taskId, token: token});
         console.log(res);
         // message.success('成功打卡！');
+        message.success("成功關閉任務");
+        navigate("/");
     };
 
     const handleDeleteTask = async () => {
         const res = await deleteTask({task_id: taskId, token: token});
         console.log(res);
-
+        message.success("成功刪除任務");
+        navigate("/");
         // message.success('成功打卡！');
     };
     const handleQuitTask = async () => {
         const res = await quitParticipation({user_id: userId, task_id: taskId, token: token});
         console.log(res);
+        message.success("成功退出任務");
+        navigate("/");
     }
 
     useEffect( async () => {
@@ -100,21 +106,30 @@ const TaskInfo = ({taskId, token, userId}) => {
       }, []);
     return(
         <>
-            <Avatar size={120} src={taskAvatar}  />
             <Title level={3}>任務簡介</Title>
             <Text>{taskDescription}</Text>
             <Title level={3}>任務規則</Title>
-            <Text>任務開始時間:{taskOpenDate}</Text>
-            <br />
+            <Descriptions
+            bordered
+            size="middle"
+            column={{ xxl: 4, xl: 3, lg: 3, md: 3, sm: 2, xs: 1 }}
+
+            >
+            <Descriptions.Item label="任務開始時間">{taskOpenDate}</Descriptions.Item>
             {
                 isClosed
                 ?
-                    <Text>任務結束時間:{taskCloseDate}</Text>
+                <Descriptions.Item label="任務結束時間">{taskCloseDate}</Descriptions.Item>
                 :
-                    <></>
+                <></>
             }
+            <Descriptions.Item label="需打卡次數">{threshold}</Descriptions.Item>
+            <Descriptions.Item label="懲罰機制（罰金）">${punish}</Descriptions.Item>
+            <Descriptions.Item label="是否需上傳文字">{need_daily_desc?"是":"否"}</Descriptions.Item>
+            <Descriptions.Item label="可打卡時段">{start_hour} ~ {end_hour}</Descriptions.Item>
+            </Descriptions>
             <br />
-            <Text>任務名稱:{taskName}</Text>
+            {/* <Text>任務名稱:{taskName}</Text>
             <br />
             <Text>需打卡次數:{threshold}</Text>
             <br />
@@ -122,7 +137,7 @@ const TaskInfo = ({taskId, token, userId}) => {
             <br />
             <Text>是否需上傳文字:{need_daily_desc?"是":"否"}</Text>
             <br />
-            <Text>可打卡時段:{start_hour} ~ {end_hour}</Text>
+            <Text>可打卡時段:{start_hour} ~ {end_hour}</Text> */}
             {
                 isManager
                 ?
@@ -144,7 +159,7 @@ const TaskInfo = ({taskId, token, userId}) => {
                 </DangerZone> 
                 </>  
                 :
-                !isClosed
+                !isClosed && !isQuit
                 ?
                 <DangerZone>
                     <Title level={4} style={{color:"red"}}>退出任務</Title>

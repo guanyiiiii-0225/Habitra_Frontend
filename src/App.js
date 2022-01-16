@@ -52,16 +52,16 @@ function App() {
     <BrowserRouter>
       <Routes>
         {/* public route */}
-        <Route exact path='/' element={isLogin ? <MainPage setToken={setToken} setValid={setValid} userId={userId} token={token}/> : <LoginPage setValid={setValid} setIsLogin={setIsLogin} setToken={setToken} userId = {userId} setUserId={setUserId} />}></Route>
+        <Route path='/' element={isLogin ? <MainPage setToken={setToken} setValid={setValid} userId={userId} token={token}/> : <Navigate to="/login" />}></Route>
         {/* private route */}
-        <Route path='/login' element={<LoginPage setValid={setValid} setIsLogin={setIsLogin} userId = {userId} setUserId={setUserId} setToken={setToken}/>}>
+        <Route path='/login' element={isLogin ? <Navigate to="/" /> : <LoginPage setValid={setValid} setIsLogin={setIsLogin} userId = {userId} setUserId={setUserId} setToken={setToken}/>}>
         </Route>
+        <Route path='/signUp' element={isLogin ? <Navigate to="/" /> : <SignUpPage />}></Route>
         <Route path='*' element={<PageNotFound />}></Route>
-        <Route path='/signup' element={<SignUpPage />}></Route>
-        <Route path='/addTask' element={ <AddTaskPage token={token} userId={userId}/>}></Route>
+        <Route path='/addTask' element={ isLogin ? <AddTaskPage token={token} userId={userId}/> : <Navigate to="/login" />}></Route>
         {/* 個人資訊頁面 */}
         {/* 統計資料頁面 */}
-        <Route path='/task/:taskId' element={ <TaskMainPage setToken={setToken} setValid={setValid} userId={userId} token={token}/> }></Route>
+        <Route path='/task/:taskId' element={isLogin ? <TaskMainPage setToken={setToken} setValid={setValid} userId={userId} token={token}/> : <Navigate to="/login" />}></Route>
       </Routes>
       </BrowserRouter>
   );

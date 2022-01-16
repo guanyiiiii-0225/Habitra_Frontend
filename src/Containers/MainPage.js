@@ -1,4 +1,4 @@
-import { Layout, Breadcrumb, Button, Avatar, Typography, Tooltip } from 'antd';
+import { Layout, Button, Avatar, Typography, Tooltip } from 'antd';
 import { Link } from 'react-router-dom'
 import SideBar from '../Components/SideBar';
 import PersonalTasks from './PersonalTasks';
@@ -8,7 +8,7 @@ import { getUserInfo, getTodayOngoing, getTodayFinish, getgetTodayDayoff,getTask
 import { useState, useEffect } from 'react';
 
 import {
-    UsergroupAddOutlined
+    FileAddOutlined
   } from '@ant-design/icons';
 
 import styled from 'styled-components'
@@ -108,10 +108,6 @@ const MainPage = ({setToken, setValid, userId, token}) => {
         <Layout className="site-layout" style={{ marginLeft: 200 }}>
             {/* 以下麵包屑 FE待修正 */}
           <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
-            <Breadcrumb style={{position: 'fixed'}}>
-              <Breadcrumb.Item>User</Breadcrumb.Item>
-              <Breadcrumb.Item>Bill</Breadcrumb.Item>
-            </Breadcrumb>
             {/* 以下是主要文件 */}
             {
                 page === 1
@@ -129,7 +125,7 @@ const MainPage = ({setToken, setValid, userId, token}) => {
                 <AddTask>
                 {/* <Button type="text">Text Button</Button> */}
                 <Link to="/addTask">
-                     <Button type="text" shape="circle" icon={<UsergroupAddOutlined />} size="large" />
+                     <Button type="text" shape="circle" icon={<FileAddOutlined />} size="large" />
                 </Link>
                 </AddTask>
             </Tooltip>

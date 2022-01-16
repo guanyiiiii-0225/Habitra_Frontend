@@ -24,7 +24,7 @@ const PersonalTasks = ({ongoingTaskInfo,doneTaskInfo,relaxTaskInfo}) => {
         {ongoingTaskInfo.map(
             task => {
                 return(
-                    <TaskCard uid={task.uid} icon={task.icon} name={task.name}/>
+                    <TaskCard uid={task.uid} icon={task.icon} name={task.name} isClosed={false} isQuit={false}/>
                 )
             }
         )}

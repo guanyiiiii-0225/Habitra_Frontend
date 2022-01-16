@@ -1,10 +1,14 @@
-import { Avatar, Switch, Typography, Divider, Form, Input, TimePicker, Select, Checkbox, Row, Col, Button  } from 'antd';
+import { Modal, Avatar, message, Switch, Typography, Divider, Form, Input, TimePicker, Select, Checkbox, Row, Col, Button  } from 'antd';
 import moment from 'moment';
 import { useState, useEffect } from 'react';
 import { addTask, addNewAdmin, addNewMember, getAllIcon } from '../axios';
+import { useNavigate } from "react-router-dom";
+
 
 const AddTaskPage = ({token, userId}) => {
 
+    //default settings
+    const navigate = useNavigate();
 //     POST /task   新增任務
         var iconList = []; 
         useEffect( async () => {
@@ -17,8 +21,11 @@ const AddTaskPage = ({token, userId}) => {
         // Typology default setting
         const { Title } = Typography;
 
-        const [taskIcon, setTaskIcon] = useState("https://joeschmoe.io/api/v1/random");
+        
         const [taskIconList, setTaskIconList] = useState(iconList);
+        const [taskIcon, setTaskIcon] = useState("https://cdn-icons-png.flaticon.com/512/620/620851.png");
+        const [taskListOpen, setTaskListOpen] = useState(false);
+
         
         // POST param @middleware
         const [title, setTitle] = useState("");
@@ -106,24 +113,42 @@ const AddTaskPage = ({token, userId}) => {
             
             setWorkDay(temp);
 
-            const response = await addTask({title:title, description:description, threshold:threshold, working_day:workDay, punish:punish, need_daily_desc:need_daily_desc, icon:icon, start_hour:start.split(" ")[4].substr(0,5), end_hour:end.split(" ")[4].substr(0,5), token: token});
-            const response_2 = await addNewMember({task_id: response, user_id: userId, token: token});
-            const response_3 = await addNewAdmin({task_id: response, user_id: userId, token: token});
+            if(title !== ""){
+                const response = await addTask({title:title, description:description, threshold:threshold, working_day:workDay, punish:punish, need_daily_desc:need_daily_desc, icon:icon, icon: taskIcon, start_hour:start.split(" ")[4].substr(0,5), end_hour:end.split(" ")[4].substr(0,5), token: token});
+                const response_2 = await addNewMember({task_id: response, user_id: userId, token: token});
+                const response_3 = await addNewAdmin({task_id: response, user_id: userId, token: token});
+                // console.log("response = ", response.message);
+                message.success("成功新增任務!");
+                navigate("/");
+            }
         }
         
 
     return(
-        <>
+        <div style={ {marginLeft: '30px', marginTop: '30px', marginRight: '100px'}}>
             <Title level={3}>新增任務</Title>
-            <Divider orientation="left">基本資訊</Divider>
+            {/* <Divider orientation="left">任務規範</Divider> */}
             <Form
                     name="normal_login"
                     className="login-form"
                     initialValues={{remember: true, layout: 'vertical'}}
 
-                >
-                    {/* 用戶姓名 */}
-                    <Form.Item
+            >
+                <Form.Item
+                        name="avatar"
+                        label="任務圖標"
+                        rules={[
+                        {
+                            required: true,
+                            message: '請選擇任務圖標!',
+                        },
+                        ]}
+                    >
+                     <Avatar shape="square" size={100} src={taskIcon} onClick={() => setTaskListOpen(true)}  />
+                </Form.Item>
+
+                {/* 打卡區間 */}
+                <Form.Item
                         name="taskName"
                         label="任務名稱"
                         rules={[
@@ -134,24 +159,15 @@ const AddTaskPage = ({token, userId}) => {
                         ]}
                     >
                         <Input  value = {title} placeholder="任務名稱" onChange={(e) => setTitle(e.target.value)}/>
-                    </Form.Item>
+                </Form.Item>
                     <Form.Item
                         name="taskDescription"
                         label="任務敘述"
                     >
                         <TextArea  value = {description} placeholder="任務敘述" onChange={(e) => setDescription(e.target.value)}/>
                     </Form.Item>
-            </Form> 
-            <Divider orientation="left">任務規範</Divider>
-            <Form
-                    name="normal_login"
-                    className="login-form"
-                    initialValues={{remember: true, layout: 'vertical'}}
-
-            >
-                {/* 打卡區間 */}
                 <Form.Item
-                    name="taskName"
+                    name="finishRange"
                     label="打卡區間"
                     rules={[
                     {
@@ -160,18 +176,12 @@ const AddTaskPage = ({token, userId}) => {
                     },
                     ]}
                 >
-                    <TimePicker.RangePicker format={"HH:mm"} value={[start_hour, end_hour]} onChange={(time) => handleTimePick(time)} />
+                    <TimePicker.RangePicker defaultValue={[start_hour, end_hour]} format={"HH:mm"} value={[start_hour, end_hour]} onChange={(time) => handleTimePick(time)} />
                 </Form.Item>
                 {/* 完成方式 */}
                 <Form.Item
-                    name="taskName"
+                    name="finishMethod"
                     label="完成方式"
-                    rules={[
-                        {
-                            required: true,
-                            message: '請輸入打卡時間區間!',
-                        },
-                    ]}
                 >
                     <Input.Group compact>
                         {finishConstraint}
@@ -213,16 +223,10 @@ const AddTaskPage = ({token, userId}) => {
                 </Form.Item>
                 {/* 懲罰機制 */}
                 <Form.Item
-                    name="punush"
+                    name="punish"
                     label="未完成罰金"
-                    rules={[
-                        {
-                            required: true,
-                            message: '請選擇是否懲罰!',
-                        },
-                    ]}
                 >
-                    <Switch checkedChildren="開啟" unCheckedChildren="關閉" defaultChecked onChange={handlePunush}/>
+                    <Switch checkedChildren="開啟" unCheckedChildren="關閉" defaultChecked={false} onChange={handlePunush}/>
                     <Input.Group compact>
                         {/* switch */}
                         {/* input box */}
@@ -234,24 +238,28 @@ const AddTaskPage = ({token, userId}) => {
                 </Form.Item>
                 {/* 需上傳文字 + info */}
                 <Form.Item
-                    name="punush"
+                    name="textRequirement"
                     label="是否需上傳文字"
-                    rules={[
-                        {
-                            required: true,
-                        },
-                    ]}
                 >
-                    <Switch checkedChildren="開啟" unCheckedChildren="關閉" defaultChecked onChange={setNeed_daily_desc}/>
+                    <Switch checkedChildren="開啟" unCheckedChildren="關閉" defaultChecked={false} onChange={setNeed_daily_desc}/>
                 </Form.Item>
                 <Form.Item>
+                        <Button className="wide-form-button" onClick={() => navigate("/")} >
+                            返回
+                        </Button>
                         <Button type="primary" htmlType="submit" className="wide-form-button" onClick={handleLogin}>
-                            submit
+                            送出
                         </Button>
                     </Form.Item>
             </Form> 
+            <Modal title="請選取你想要的圖標" visible={taskListOpen} onCancel={() =>{setTaskListOpen(false);}} footer={[]}
+            >
+                {/* <Collapse defaultActiveKey={['1']} onChange={callback} accordion> */}
+                {taskIconList.map(url => (<Avatar shape="square" size={64} src={url} onClick={(e) => {setTaskIcon(e.target.src);setTaskListOpen(false);}}/>))}
+                {/* </Collapse> */}
+            </Modal>
 
-        </>
+        </div>
     )
 
 }

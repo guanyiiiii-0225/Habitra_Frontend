@@ -7,11 +7,12 @@
 
 import { useState, useEffect } from "react";
 // import { Layout, Menu, Breadcrumb, Button, Avatar, Typography, DatePicker } from 'antd';
-import { DatePicker, Typography, Avatar, Progress } from 'antd';
+import { DatePicker, Typography, Avatar, Progress, Divider } from 'antd';
 import TaskDescCard from "../Components/TaskDescCard";
 import styled from "styled-components";
 import { getTaskDetail, getDailyRecord, getTask, getParticipationDetail } from '../axios';
 import { C } from "caniuse-lite/data/agents";
+import moment from "moment";
 
 
 const TaskView = ({taskId, token, userId}) => { 
@@ -96,9 +97,7 @@ const TaskView = ({taskId, token, userId}) => {
     
     return(
         <>
-        <Title level={3}>{taskName}</Title>
-        <Avatar size={120} src={taskAvatar}  />
-        <DatePicker onChange={(e) => dateOnChange(e._d) } allowClear={false} />
+        <DatePicker defaultValue={moment()} onChange={ (e) => dateOnChange(e._d) } allowClear={false} />
         <Progress percent={frequency/expectedFrequency * 100} size="small" />
         <TaskDescCard done={done} desc={description}/>
         <AddDone></AddDone>

@@ -5,6 +5,7 @@ import React, { useState, useEffect } from 'react';
 import { Column } from '@ant-design/plots';
 import StatsInfoCard from '../Components/StatsInfoCard';
 import { getDurationOpen, getPeriodRecord, getTaskDetail, getTask } from '../axios';
+import moment from 'moment';
 
 const PersonalStats = ({userId, token}) => {
 
@@ -134,7 +135,7 @@ const PersonalStats = ({userId, token}) => {
 
     return(
         <>
-            <DatePicker onChange={(e) => weekOnChange(e._d)} picker="week" allowClear={false}/>
+            <DatePicker defaultValue = {moment}onChange={(e) => weekOnChange(e._d)} picker="week" allowClear={false}/>
             <DemoColumn />
             <StatsInfoCard achieveTotalCount={achieveCount.reduce((a, b) => a + b, 0)} expectedTotalCount={expectedTotalCount} />
         </>

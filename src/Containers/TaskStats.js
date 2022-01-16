@@ -14,6 +14,7 @@ import {Modal, Typography, Statistic, List, Avatar, Button, message, DatePicker,
 import styled from "styled-components";
 import { Icon } from '@iconify/react';
 import { getRecordPunish, getUserInfo, getParticipationDetail, getTaskDetail, getRecordDetail, clearMoney, getRecordCount } from '../axios';
+import moment from 'moment';
 
 // 記得 {userId}
 const TaskStats = ({taskId, token, userId}) => {
@@ -212,7 +213,7 @@ const TaskStats = ({taskId, token, userId}) => {
                 <Statistic title="累積金額 (NTD)" value={totalArrear} precision={0} />
             </CardOutline>
             <Modal 
-                title="貢獻金額成員清單" 
+                title="成員款項貢獻紀錄" 
                 visible={openModal} 
                 onCancel={() => setOpenModal(false)}
                 footer={isMgr ? [<Button type="primary" onClick={() => handleEmtifiedFee()}>清空</Button>] : []} 
@@ -232,7 +233,7 @@ const TaskStats = ({taskId, token, userId}) => {
                 />
                 {/* <Divider ></Divider> */}
             </Modal>
-            <DatePicker onChange={(e) => weekOnChange(e._d)} picker="week" allowClear={false}/>
+            <DatePicker defaultValue={moment()} onChange={(e) => weekOnChange(e._d)} picker="week" allowClear={false}/>
             <DemoColumn />
             <Row>
                 <Col span={12}>
