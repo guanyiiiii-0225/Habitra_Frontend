@@ -1,70 +1,16 @@
-# Getting Started with Create React App
+# Habitra 習慣養成社群（Frontend）
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 主題描述：
+想必大家經常都會遇到想要養成每天運動的習慣或是想要一週固定幾天去圖書館複習，但往往會因為偷懶或是沒有動力而嘗試幾次就放棄，因此我們製作了「習慣養成社群 Habitra」，我們希望透過以任務為導向的群組來互相督促，開啟新任務群組的管理員可以設定每天打卡次數、一週的休息日、和沒達到標準會有多少金額的懲罰累積，我們會在後端做運算後於前端畫面顯示，並設置了任務群組錢包，顯示各成員累積的懲罰金額，群組成員可以在相約吃飯時依顯示金額請客吃飯，並於系統中清空錢包。希望透過夥伴的力量，可以一起養成良好的習慣！
 
-## Available Scripts
+## 成果展示
+- Demo影片連結：https://drive.google.com/drive/folders/1DjKDuPkl-mrxqXiaisGsLMKVQ0CbliH3?usp=sharing
 
-In the project directory, you can run:
 
-### `yarn start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `yarn test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `yarn build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## 使用與參考之套件/框架/原始碼
+- frontend
+    - React.js, react-router-dom, axios, ant-design
+- backend
+    - Node.js, MongoDB
+- deployment
+    - Netlify, Heroku
