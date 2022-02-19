@@ -5,6 +5,9 @@
 
 ## 成果展示
 - Demo影片連結：https://drive.google.com/drive/folders/1DjKDuPkl-mrxqXiaisGsLMKVQ0CbliH3?usp=sharing
+- 網站截圖：
+<img width="959" alt="image" src="https://user-images.githubusercontent.com/58909342/154788543-3a4e53fd-83f4-4507-b353-5185c730f0f1.png">
+
 
 
 ## 使用與參考之套件/框架/原始碼
